@@ -1,4 +1,4 @@
-package com.eduardooliveira.controllers;
+package com.eduardooliveira.controller;
 
 import com.eduardooliveira.model.Person;
 import com.eduardooliveira.service.PersonService;
