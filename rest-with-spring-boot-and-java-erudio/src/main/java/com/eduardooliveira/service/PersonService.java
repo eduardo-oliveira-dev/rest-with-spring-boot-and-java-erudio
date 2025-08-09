@@ -1,6 +1,10 @@
 package com.eduardooliveira.service;
 
+import com.eduardooliveira.dto.v1.PersonDTO;
+import com.eduardooliveira.dto.v2.PersonDTOV2;
 import com.eduardooliveira.exception.ResourceNotFoundException;
+
+import com.eduardooliveira.mapper.custom.PersonMapper;
 import com.eduardooliveira.model.Person;
 import com.eduardooliveira.repository.PersonRepository;
 import org.slf4j.Logger;
@@ -10,6 +14,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
+
+import static com.eduardooliveira.mapper.ObjectMapper.parseListObjects;
+import static com.eduardooliveira.mapper.ObjectMapper.parseObject;
 
 @Service
 public class PersonService {
@@ -21,23 +28,34 @@ public class PersonService {
     @Autowired
     PersonRepository personRepository;
 
-    public List<Person> findAll() {
+    @Autowired
+    PersonMapper converter;
+
+    public List<PersonDTO> findAll() {
         logger.info("Finding all People!");
-        return personRepository.findAll();
+        return parseListObjects(personRepository.findAll(), PersonDTO.class);
     }
 
-    public Person findById(Long id) {
+    public PersonDTO findById(Long id) {
         logger.info("Finding one Person!");
-        return personRepository.findById(id)
+        var entity = personRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("No record found for this ID!"));
+        return parseObject(entity, PersonDTO.class);
     }
 
-    public Person create(Person person) {
-        logger.info("Creating Person!");
-        return personRepository.save(person);
+    public PersonDTO create(PersonDTO person) {
+        logger.info("Creating a Person!");
+        var entity = parseObject(person, Person.class);
+        return parseObject(personRepository.save(entity), PersonDTO.class);
     }
 
-    public Person update(Person person) {
+    public PersonDTOV2 createV2(PersonDTOV2 person) {
+        logger.info("Creating a Person V2!");
+        var entity = converter.convertDTOToEntity(person);
+        return converter.convertEntityToDTO(personRepository.save(entity));
+    }
+
+    public PersonDTO update(PersonDTO person) {
         logger.info("Updating Person!");
         Person entity = personRepository.findById(person.getId())
                 .orElseThrow(() -> new ResourceNotFoundException("No record found for this ID!"));
@@ -46,7 +64,7 @@ public class PersonService {
         entity.setAddress(person.getAddress());
         entity.setGender(person.getGender());
 
-        return personRepository.save(entity);
+        return parseObject(personRepository.save(entity), PersonDTO.class);
     }
 
     public void delete(Long id) {
