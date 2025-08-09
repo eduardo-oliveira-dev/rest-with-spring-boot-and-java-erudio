@@ -4,6 +4,7 @@ import com.eduardooliveira.model.Person;
 import com.eduardooliveira.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,32 +16,28 @@ public class PersonController {
     @Autowired
     private PersonService personService;
 
-    @RequestMapping(
-            method = RequestMethod.GET,
-            produces = MediaType.APPLICATION_JSON_VALUE
-    )
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Person> findAll() {
         return personService.findAll();
     }
-    @RequestMapping(
+
+    @GetMapping(
             value = "/{id}",
-            method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public Person findById(@PathVariable("id") String id) {
+    public Person findById(@PathVariable("id") Long id) {
         return personService.findById(id);
     }
 
-    @RequestMapping(
-            method = RequestMethod.POST,
+    @PostMapping(
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE
     )
     public Person create(@RequestBody Person person) {
         return personService.create(person);
     }
-    @RequestMapping(
-            method = RequestMethod.PUT,
+
+    @PutMapping(
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE
     )
@@ -48,11 +45,9 @@ public class PersonController {
         return personService.update(person);
     }
 
-    @RequestMapping(
-            value = "/{id}",
-            method = RequestMethod.DELETE
-    )
-    public void delete(@PathVariable("id") String id) {
-         personService.delete(id);
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<?> delete(@PathVariable("id") Long id) {
+        personService.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }
