@@ -9,7 +9,7 @@ import org.springframework.hateoas.RepresentationModel;
 import java.io.Serializable;
 import java.util.Objects;
 
-@JsonPropertyOrder({"id", "address", "first_name", "last_name", "gender"})
+@JsonPropertyOrder({"id", "first_name", "last_name", "address", "gender"})
 public class PersonDTO extends RepresentationModel<PersonDTO> implements Serializable {
 
     private static final long serialVersionUID = 1L;
