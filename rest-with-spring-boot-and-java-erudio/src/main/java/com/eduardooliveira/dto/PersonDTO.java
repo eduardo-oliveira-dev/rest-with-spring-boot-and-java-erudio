@@ -1,4 +1,4 @@
-package com.eduardooliveira.dto.v1;
+package com.eduardooliveira.dto;
 
 import java.io.Serializable;
 import java.util.Objects;

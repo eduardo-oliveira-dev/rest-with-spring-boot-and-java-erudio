@@ -1,10 +1,8 @@
 package com.eduardooliveira.service;
 
-import com.eduardooliveira.dto.v1.PersonDTO;
-import com.eduardooliveira.dto.v2.PersonDTOV2;
+import com.eduardooliveira.dto.PersonDTO;
 import com.eduardooliveira.exception.ResourceNotFoundException;
 
-import com.eduardooliveira.mapper.custom.PersonMapper;
 import com.eduardooliveira.model.Person;
 import com.eduardooliveira.repository.PersonRepository;
 import org.slf4j.Logger;
@@ -28,8 +26,6 @@ public class PersonService {
     @Autowired
     PersonRepository personRepository;
 
-    @Autowired
-    PersonMapper converter;
 
     public List<PersonDTO> findAll() {
         logger.info("Finding all People!");
@@ -47,12 +43,6 @@ public class PersonService {
         logger.info("Creating a Person!");
         var entity = parseObject(person, Person.class);
         return parseObject(personRepository.save(entity), PersonDTO.class);
-    }
-
-    public PersonDTOV2 createV2(PersonDTOV2 person) {
-        logger.info("Creating a Person V2!");
-        var entity = converter.convertDTOToEntity(person);
-        return converter.convertEntityToDTO(personRepository.save(entity));
     }
 
     public PersonDTO update(PersonDTO person) {
