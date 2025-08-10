@@ -22,14 +22,24 @@ public class WebConfig implements WebMvcConfigurer {
                 .mediaType("xml", MediaType.APPLICATION_XML); */
 
         // Via Header
-        configurer
+        /* configurer
                 .favorParameter(false) // Usa parâmetro ?mediaType=json
                 .parameterName("mediaType")
                 .ignoreAcceptHeader(false) // Respeita o cabeçalho Accept
                 .useRegisteredExtensionsOnly(false)
                 .defaultContentType(MediaType.APPLICATION_JSON)
                 .mediaType("json", MediaType.APPLICATION_JSON)
-                .mediaType("xml", MediaType.APPLICATION_XML);
+                .mediaType("xml", MediaType.APPLICATION_XML); */
+
+        // Add support to yaml
+        configurer
+                .favorParameter(false)
+                .parameterName("mediaType")
+                .ignoreAcceptHeader(false)
+                .useRegisteredExtensionsOnly(false)
+                .defaultContentType(MediaType.APPLICATION_JSON)
+                .mediaType("json", MediaType.APPLICATION_JSON)
+                .mediaType("yaml", MediaType.APPLICATION_YAML);
 
     }
 
