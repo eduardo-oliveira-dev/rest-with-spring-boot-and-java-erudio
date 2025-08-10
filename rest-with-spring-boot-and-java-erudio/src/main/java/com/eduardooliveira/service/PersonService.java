@@ -1,5 +1,6 @@
 package com.eduardooliveira.service;
 
+import com.eduardooliveira.controller.PersonController;
 import com.eduardooliveira.dto.PersonDTO;
 import com.eduardooliveira.exception.ResourceNotFoundException;
 
@@ -8,6 +9,7 @@ import com.eduardooliveira.repository.PersonRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,6 +17,7 @@ import java.util.concurrent.atomic.AtomicLong;
 
 import static com.eduardooliveira.mapper.ObjectMapper.parseListObjects;
 import static com.eduardooliveira.mapper.ObjectMapper.parseObject;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Service
 public class PersonService {
@@ -36,7 +39,9 @@ public class PersonService {
         logger.info("Finding one Person!");
         var entity = personRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("No record found for this ID!"));
-        return parseObject(entity, PersonDTO.class);
+        var dto = parseObject(entity, PersonDTO.class);
+        dto.add(linkTo(methodOn(PersonController.class).findById(id)).withSelfRel().withType("GET"));
+        return dto;
     }
 
     public PersonDTO create(PersonDTO person) {
