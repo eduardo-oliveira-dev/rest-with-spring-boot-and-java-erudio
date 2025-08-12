@@ -2,27 +2,25 @@ package com.eduardooliveira.service;
 
 import com.eduardooliveira.controller.PersonController;
 import com.eduardooliveira.dto.PersonDTO;
+import com.eduardooliveira.exception.RequiredObjectIsNullException;
 import com.eduardooliveira.exception.ResourceNotFoundException;
-
 import com.eduardooliveira.model.Person;
 import com.eduardooliveira.repository.PersonRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.concurrent.atomic.AtomicLong;
 
 import static com.eduardooliveira.mapper.ObjectMapper.parseListObjects;
 import static com.eduardooliveira.mapper.ObjectMapper.parseObject;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Service
 public class PersonService {
 
-    private final AtomicLong counter = new AtomicLong();
 
     private Logger logger = LoggerFactory.getLogger(PersonService.class.getName());
 
@@ -48,6 +46,9 @@ public class PersonService {
 
 
     public PersonDTO create(PersonDTO person) {
+
+        if(person == null) throw new RequiredObjectIsNullException();
+
         logger.info("Creating a Person!");
         var entity = parseObject(person, Person.class);
         var dto = parseObject(personRepository.save(entity), PersonDTO.class);
@@ -56,6 +57,10 @@ public class PersonService {
     }
 
     public PersonDTO update(PersonDTO person) {
+
+        if(person == null) throw new RequiredObjectIsNullException();
+
+
         logger.info("Updating Person!");
         Person entity = personRepository.findById(person.getId())
                 .orElseThrow(() -> new ResourceNotFoundException("No record found for this ID!"));
