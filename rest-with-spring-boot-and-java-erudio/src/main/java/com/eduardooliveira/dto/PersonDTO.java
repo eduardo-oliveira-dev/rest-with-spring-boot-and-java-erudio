@@ -6,17 +6,12 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.springframework.hateoas.RepresentationModel;
 
-import java.io.Serializable;
 import java.util.Objects;
 
 @JsonPropertyOrder({"id", "first_name", "last_name", "address", "gender"})
-public class PersonDTO extends RepresentationModel<PersonDTO> implements Serializable {
-
-    private static final long serialVersionUID = 1L;
-
+public class PersonDTO extends RepresentationModel<PersonDTO>{
 
     private Long id;
-
 
     @JsonProperty("first_name")
     private String firstName;
