@@ -1,4 +1,4 @@
-package com.eduardooliveira.unittests.service;
+package com.eduardooliveira.service;
 
 import com.eduardooliveira.controller.BooksController;
 import com.eduardooliveira.dto.BooksDTO;

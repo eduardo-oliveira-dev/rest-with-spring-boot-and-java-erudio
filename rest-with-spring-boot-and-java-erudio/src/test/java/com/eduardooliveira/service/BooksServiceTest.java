@@ -1,4 +1,4 @@
-package com.eduardooliveira.unittests.service;
+package com.eduardooliveira.service;
 
 import com.eduardooliveira.dto.BooksDTO;
 import com.eduardooliveira.exception.RequiredObjectIsNullException;

@@ -1,4 +1,4 @@
-package com.eduardooliveira.dto;
+package com.eduardooliveira.integreationtests.dto;
 
 import com.eduardooliveira.serializer.GenderSerializer;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -9,7 +9,7 @@ import org.springframework.hateoas.RepresentationModel;
 import java.util.Objects;
 
 @JsonPropertyOrder({"id", "first_name", "last_name", "address", "gender"})
-public class PersonDTO extends RepresentationModel<PersonDTO>{
+public class PersonDTO {
 
     private Long id;
 
@@ -20,7 +20,7 @@ public class PersonDTO extends RepresentationModel<PersonDTO>{
     private String lastName;
     private String address;
 
-    //@JsonSerialize(using = GenderSerializer.class)
+    @JsonSerialize(using = GenderSerializer.class)
     private String gender;
 
     public PersonDTO() {

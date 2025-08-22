@@ -2,7 +2,7 @@ package com.eduardooliveira.controller;
 
 import com.eduardooliveira.controller.docs.BooksControllerDocs;
 import com.eduardooliveira.dto.BooksDTO;
-import com.eduardooliveira.unittests.service.BooksService;
+import com.eduardooliveira.service.BooksService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
