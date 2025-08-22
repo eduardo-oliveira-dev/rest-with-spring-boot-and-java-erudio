@@ -1,4 +1,4 @@
-package com.eduardooliveira.integreationtests.controller.withjson;
+package com.eduardooliveira.integreationtests.controller.cors.withjson;
 
 import com.eduardooliveira.config.TestConfigs;
 import com.eduardooliveira.dto.PersonDTO;
