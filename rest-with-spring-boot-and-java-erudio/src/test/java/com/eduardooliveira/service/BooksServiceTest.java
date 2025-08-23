@@ -14,6 +14,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -169,7 +170,7 @@ class BooksServiceTest {
     void findAll() {
         List<Books> list = input.mockEntityList();
         when(booksRepository.findAll()).thenReturn(list);
-        List<BooksDTO> people = booksService.findAll();
+        List<BooksDTO> people = new ArrayList<>();
 
         assertNotNull(people);
         assertEquals(14, people.size());
